@@ -47,7 +47,7 @@ export default function ReportDog() {
   const form = useForm<InsertDog>({
     resolver: zodResolver(dogReportSchema),
     defaultValues: {
-      breed: "",
+      breed: "Unknown",
       color: "",
       description: "",
       imageUrls: [],
@@ -131,14 +131,14 @@ export default function ReportDog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Breed (if known)</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value || "Unknown"}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select breed or 'Unknown'" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="">Unknown</SelectItem>
+                        <SelectItem value="Unknown">Unknown</SelectItem>
                         <SelectItem value="Labrador">Labrador</SelectItem>
                         <SelectItem value="German Shepherd">German Shepherd</SelectItem>
                         <SelectItem value="Golden Retriever">Golden Retriever</SelectItem>

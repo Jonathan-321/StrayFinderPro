@@ -7,12 +7,21 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
+interface AuthData {
+  authenticated: boolean;
+  user?: {
+    id: number;
+    username: string;
+    isAdmin: boolean;
+  };
+}
+
 export default function Navbar() {
   const [, setLocation] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
 
-  const { data: authData } = useQuery({
+  const { data: authData = { authenticated: false } } = useQuery<AuthData>({
     queryKey: ['/api/auth/status'],
   });
 
@@ -48,26 +57,26 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center">
+              <div className="flex items-center cursor-pointer">
                 <PawPrint className="h-6 w-6 text-primary mr-2" />
                 <span className="font-bold text-xl text-gray-900">PawFinder</span>
-              </a>
+              </div>
             </Link>
           </div>
           
           <nav className="hidden md:flex space-x-8">
             <Link href="/">
-              <a className="text-primary font-medium">Home</a>
+              <div className="text-primary font-medium cursor-pointer">Home</div>
             </Link>
             <Link href="/found-dogs">
-              <a className="text-gray-500 hover:text-primary font-medium">Found Dogs</a>
+              <div className="text-gray-500 hover:text-primary font-medium cursor-pointer">Found Dogs</div>
             </Link>
             <Link href="/report-dog">
-              <a className="text-gray-500 hover:text-primary font-medium">Report Dog</a>
+              <div className="text-gray-500 hover:text-primary font-medium cursor-pointer">Report Dog</div>
             </Link>
             {isAdmin && (
               <Link href="/admin">
-                <a className="text-gray-500 hover:text-primary font-medium">Admin</a>
+                <div className="text-gray-500 hover:text-primary font-medium cursor-pointer">Admin</div>
               </Link>
             )}
             {isAuthenticated ? (
@@ -92,17 +101,17 @@ export default function Navbar() {
               <SheetContent side="right">
                 <div className="flex flex-col space-y-4 mt-8">
                   <Link href="/">
-                    <a className="text-lg font-medium" onClick={() => setIsOpen(false)}>Home</a>
+                    <div className="text-lg font-medium cursor-pointer" onClick={() => setIsOpen(false)}>Home</div>
                   </Link>
                   <Link href="/found-dogs">
-                    <a className="text-lg font-medium" onClick={() => setIsOpen(false)}>Found Dogs</a>
+                    <div className="text-lg font-medium cursor-pointer" onClick={() => setIsOpen(false)}>Found Dogs</div>
                   </Link>
                   <Link href="/report-dog">
-                    <a className="text-lg font-medium" onClick={() => setIsOpen(false)}>Report Dog</a>
+                    <div className="text-lg font-medium cursor-pointer" onClick={() => setIsOpen(false)}>Report Dog</div>
                   </Link>
                   {isAdmin && (
                     <Link href="/admin">
-                      <a className="text-lg font-medium" onClick={() => setIsOpen(false)}>Admin</a>
+                      <div className="text-lg font-medium cursor-pointer" onClick={() => setIsOpen(false)}>Admin</div>
                     </Link>
                   )}
                   {isAuthenticated && (

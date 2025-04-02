@@ -11,8 +11,8 @@ interface FiltersBarProps {
 
 export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
   const [filters, setFilters] = useState({
-    breed: "",
-    city: "",
+    breed: "all_breeds",
+    city: "all_locations",
     query: "",
   });
 
@@ -32,14 +32,18 @@ export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
 
   // Apply filters
   const handleApplyFilters = () => {
-    onFilterChange(filters);
+    onFilterChange({
+      breed: filters.breed === "all_breeds" ? "" : filters.breed,
+      city: filters.city === "all_locations" ? "" : filters.city,
+      query: filters.query
+    });
   };
 
   // Reset filters
   const handleResetFilters = () => {
     setFilters({
-      breed: "",
-      city: "",
+      breed: "all_breeds",
+      city: "all_locations",
       query: "",
     });
     onFilterChange({
@@ -78,9 +82,9 @@ export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
             <SelectValue placeholder="All Breeds" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Breeds</SelectItem>
+            <SelectItem value="all_breeds">All Breeds</SelectItem>
             {uniqueBreeds.map((breed) => (
-              <SelectItem key={breed} value={breed || ""}>
+              <SelectItem key={breed} value={breed || "unknown"}>
                 {breed || "Unknown"}
               </SelectItem>
             ))}
@@ -97,10 +101,10 @@ export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
             <SelectValue placeholder="All Locations" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Locations</SelectItem>
+            <SelectItem value="all_locations">All Locations</SelectItem>
             {uniqueCities.map((city) => (
-              <SelectItem key={city} value={city}>
-                {city}
+              <SelectItem key={city} value={city || "unknown_city"}>
+                {city || "Unknown"}
               </SelectItem>
             ))}
           </SelectContent>
@@ -111,7 +115,7 @@ export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
         <Button onClick={handleApplyFilters} className="w-full md:w-auto">
           Filter
         </Button>
-        {(filters.breed || filters.city || filters.query) && (
+        {(filters.breed !== "all_breeds" || filters.city !== "all_locations" || filters.query) && (
           <Button variant="outline" onClick={handleResetFilters} className="w-full md:w-auto">
             Reset
           </Button>
