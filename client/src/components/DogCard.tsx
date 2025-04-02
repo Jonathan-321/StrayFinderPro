@@ -34,41 +34,39 @@ export default function DogCard({ dog }: DogCardProps) {
   return (
     <>
       <Card className="overflow-hidden h-full flex flex-col">
-        <div className="relative h-48">
+        <div className="relative h-40 sm:h-48">
           <img 
             src={dog.imageUrls[0]} 
             alt={`${dog.breed || 'Dog'}`} 
             className="w-full h-full object-cover" 
           />
         </div>
-        <CardContent className="p-4 flex-grow flex flex-col">
+        <CardContent className="p-3 sm:p-4 flex-grow flex flex-col">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="text-xl font-semibold text-gray-900">{dog.breed || 'Unknown Breed'}</h3>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{dog.breed || 'Unknown Breed'}</h3>
             {getStatusBadge()}
           </div>
-          <p className="text-gray-600 text-sm mb-2">
-            <MapPin className="h-4 w-4 inline mr-1" /> {dog.city}
+          <p className="text-gray-600 text-xs sm:text-sm mb-2">
+            <MapPin className="h-3 w-3 sm:h-4 sm:w-4 inline mr-1" /> {dog.city}
           </p>
-          <p className="text-gray-600 mb-4 flex-grow">
-            {truncateText(dog.description, 120)}
+          <p className="text-gray-600 text-sm mb-3 flex-grow">
+            {truncateText(dog.description, 100)}
           </p>
           
-          <div className="flex space-x-2 mt-2">
+          <div className="flex space-x-2 mt-auto">
             <Button
               variant="default"
-              className="w-full"
+              className="w-full text-xs sm:text-sm py-1 h-8"
               onClick={() => setContactModalOpen(true)}
             >
-              Contact Finder
+              Contact
             </Button>
             <Button
               variant="outline"
-              className="flex-shrink-0"
+              className="flex-shrink-0 text-xs sm:text-sm py-1 h-8"
               asChild
             >
-              <Link href={`/dog/${dog.id}`}>
-                <a>Details</a>
-              </Link>
+              <Link href={`/dog/${dog.id}`}>Details</Link>
             </Button>
           </div>
         </CardContent>

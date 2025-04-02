@@ -58,22 +58,22 @@ export default function FoundDogs() {
   }
 
   return (
-    <div className="bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Recently Found Dogs</h2>
-          <p className="text-gray-600">Browse through dogs that have been found. Is your furry friend here?</p>
+    <div className="bg-gray-50 py-6 md:py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="mb-6 md:mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">Recently Found Dogs</h2>
+          <p className="text-sm md:text-base text-gray-600">Browse through dogs that have been found. Is your furry friend here?</p>
         </div>
 
         <div className="mb-8">
           <FiltersBar onFilterChange={handleFilterChange} />
           
-          <div className="mt-3 bg-blue-50 border border-blue-100 rounded-md p-4 text-sm text-blue-800">
-            <p className="flex items-center">
-              <span className="mr-2">💡</span>
+          <div className="mt-2 bg-blue-50 border border-blue-100 rounded-md p-2 md:p-3 text-xs md:text-sm text-blue-800">
+            <p className="flex items-start md:items-center">
+              <span className="mr-1 md:mr-2 mt-0.5 md:mt-0">💡</span>
               <span>
-                <strong>Tip:</strong> Use the filters above to search by breed, city, or keywords. 
-                Click on any dog card to view more details and contact information.
+                <strong>Tip:</strong> Filter by breed or city, or use keywords to search. 
+                Tap any dog card for details and contact info.
               </span>
             </p>
           </div>

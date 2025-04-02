@@ -30,18 +30,18 @@ export default function Home() {
         </div>
         
         {/* Welcome banner */}
-        <div className="bg-blue-50 border-t border-b border-blue-100 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center md:justify-between flex-wrap">
-              <div className="flex items-center flex-shrink-0 mr-6">
-                <span className="font-medium text-blue-600 text-lg">Welcome to PawFinder!</span>
+        <div className="bg-blue-50 border-t border-b border-blue-100 py-3">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+              <div className="flex justify-center md:justify-start mb-2 md:mb-0">
+                <span className="font-medium text-blue-600 text-base md:text-lg">Welcome to PawFinder!</span>
               </div>
-              <div className="flex-grow text-center md:text-left my-2 md:my-0 text-sm text-blue-700">
-                Over 150,000 dogs are reunited with their families each year. Help us grow that number!
+              <div className="text-center md:text-left text-xs md:text-sm text-blue-700 mb-3 md:mb-0">
+                Over 150,000 dogs are reunited with their families each year!
               </div>
-              <div className="flex-shrink-0 mt-2 md:mt-0">
+              <div className="flex justify-center md:justify-end">
                 <Link href="#how-it-works">
-                  <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-600 border-blue-600 hover:border-transparent hover:text-white hover:bg-blue-600 cursor-pointer">
+                  <span className="inline-block text-xs md:text-sm px-3 py-1 leading-none border rounded text-blue-600 border-blue-600 hover:border-transparent hover:text-white hover:bg-blue-600 cursor-pointer">
                     Learn How
                   </span>
                 </Link>

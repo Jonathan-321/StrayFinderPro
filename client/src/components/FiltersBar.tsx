@@ -61,65 +61,67 @@ export default function FiltersBar({ onFilterChange }: FiltersBarProps) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm flex flex-col md:flex-row gap-4">
-      <div className="flex-grow md:w-1/3">
-        <Input
-          type="text"
-          placeholder="Search by breed, color, location..."
-          value={filters.query}
-          onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-          onKeyDown={handleKeyDown}
-          className="w-full"
-        />
-      </div>
-      
-      <div className="md:w-1/4">
-        <Select
-          value={filters.breed}
-          onValueChange={(value) => setFilters({ ...filters, breed: value })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="All Breeds" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all_breeds">All Breeds</SelectItem>
-            {uniqueBreeds.map((breed) => (
-              <SelectItem key={breed} value={breed || "unknown"}>
-                {breed || "Unknown"}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <div className="md:w-1/4">
-        <Select
-          value={filters.city}
-          onValueChange={(value) => setFilters({ ...filters, city: value })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="All Locations" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all_locations">All Locations</SelectItem>
-            {uniqueCities.map((city) => (
-              <SelectItem key={city} value={city || "unknown_city"}>
-                {city || "Unknown"}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <div className="flex gap-2">
-        <Button onClick={handleApplyFilters} className="w-full md:w-auto">
-          Filter
-        </Button>
-        {(filters.breed !== "all_breeds" || filters.city !== "all_locations" || filters.query) && (
-          <Button variant="outline" onClick={handleResetFilters} className="w-full md:w-auto">
-            Reset
+    <div className="bg-white p-3 rounded-lg shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div className="col-span-1 md:col-span-1">
+          <Input
+            type="text"
+            placeholder="Search dogs..."
+            value={filters.query}
+            onChange={(e) => setFilters({ ...filters, query: e.target.value })}
+            onKeyDown={handleKeyDown}
+            className="w-full text-sm"
+          />
+        </div>
+        
+        <div className="col-span-1 md:col-span-1">
+          <Select
+            value={filters.breed}
+            onValueChange={(value) => setFilters({ ...filters, breed: value })}
+          >
+            <SelectTrigger className="text-sm h-9">
+              <SelectValue placeholder="All Breeds" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all_breeds">All Breeds</SelectItem>
+              {uniqueBreeds.map((breed) => (
+                <SelectItem key={breed} value={breed || "unknown"}>
+                  {breed || "Unknown"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div className="col-span-1 md:col-span-1">
+          <Select
+            value={filters.city}
+            onValueChange={(value) => setFilters({ ...filters, city: value })}
+          >
+            <SelectTrigger className="text-sm h-9">
+              <SelectValue placeholder="All Locations" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all_locations">All Locations</SelectItem>
+              {uniqueCities.map((city) => (
+                <SelectItem key={city} value={city || "unknown_city"}>
+                  {city || "Unknown"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div className="col-span-1 md:col-span-1 flex gap-2">
+          <Button onClick={handleApplyFilters} className="w-1/2 md:w-full text-sm h-9">
+            Filter
           </Button>
-        )}
+          {(filters.breed !== "all_breeds" || filters.city !== "all_locations" || filters.query) && (
+            <Button variant="outline" onClick={handleResetFilters} className="w-1/2 md:w-auto text-sm h-9">
+              Reset
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
