@@ -31,23 +31,23 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/">
-                  <a className="text-gray-400 hover:text-white">Home</a>
+                <Link href="/" className="text-gray-400 hover:text-white">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/found-dogs">
-                  <a className="text-gray-400 hover:text-white">Found Dogs</a>
+                <Link href="/found-dogs" className="text-gray-400 hover:text-white">
+                  Found Dogs
                 </Link>
               </li>
               <li>
-                <Link href="/report-dog">
-                  <a className="text-gray-400 hover:text-white">Report Dog</a>
+                <Link href="/report-dog" className="text-gray-400 hover:text-white">
+                  Report Dog
                 </Link>
               </li>
               <li>
-                <Link href="/#about">
-                  <a className="text-gray-400 hover:text-white">About Us</a>
+                <Link href="/#about" className="text-gray-400 hover:text-white">
+                  About Us
                 </Link>
               </li>
             </ul>
@@ -57,8 +57,8 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/#how-it-works">
-                  <a className="text-gray-400 hover:text-white">How It Works</a>
+                <Link href="/#how-it-works" className="text-gray-400 hover:text-white">
+                  How It Works
                 </Link>
               </li>
               <li>
