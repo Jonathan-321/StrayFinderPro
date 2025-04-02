@@ -34,6 +34,94 @@ export class MemStorage implements IStorage {
       // Update the user to be an admin
       const updatedUser = { ...user, isAdmin: true };
       this.users.set(user.id, updatedUser);
+      
+      // Add demo dogs after admin user is created
+      this.addDemoDogs();
+    });
+  }
+  
+  private addDemoDogs() {
+    const demoDogs: InsertDog[] = [
+      {
+        breed: "Labrador",
+        color: "Golden",
+        description: "Friendly male Labrador with a blue collar. Very energetic and loves to play. Responds to 'Max'.",
+        imageUrls: ["https://images.unsplash.com/photo-1579213838051-c606802e1e56?w=500&auto=format&fit=crop"],
+        address: "Central Park, Main Entrance",
+        city: "New York",
+        latitude: "40.7812",
+        longitude: "-73.9665",
+        dateFound: "2025-03-28",
+        timeFound: "14:30",
+        finderName: "James Wilson",
+        finderPhone: "555-123-4567",
+        finderEmail: "james.wilson@example.com"
+      },
+      {
+        breed: "German Shepherd",
+        color: "Black and Tan",
+        description: "Adult German Shepherd, appears well-trained. Has a red collar with no tag. Very calm and obedient.",
+        imageUrls: ["https://images.unsplash.com/photo-1589941013453-ec89f98c6e8e?w=500&auto=format&fit=crop"],
+        address: "Washington Square Park",
+        city: "New York",
+        latitude: "40.7308",
+        longitude: "-73.9973",
+        dateFound: "2025-03-29",
+        timeFound: "09:15",
+        finderName: "Sarah Miller",
+        finderPhone: "555-987-6543",
+        finderEmail: "sarah.m@example.com"
+      },
+      {
+        breed: "Beagle",
+        color: "Tricolor",
+        description: "Small beagle puppy, about 6 months old. Has a green collar with a bell. Very playful and friendly.",
+        imageUrls: ["https://images.unsplash.com/photo-1505628346881-b72b27e84530?w=500&auto=format&fit=crop"],
+        address: "Prospect Park",
+        city: "Brooklyn",
+        latitude: "40.6602",
+        longitude: "-73.9690",
+        dateFound: "2025-03-30",
+        timeFound: "16:45",
+        finderName: "David Johnson",
+        finderPhone: "555-234-5678",
+        finderEmail: "david.j@example.com"
+      },
+      {
+        breed: "Husky",
+        color: "Gray and White",
+        description: "Beautiful adult husky with striking blue eyes. No collar but appears well-groomed and healthy. Very friendly with people.",
+        imageUrls: ["https://images.unsplash.com/photo-1605568427561-40dd23c2acea?w=500&auto=format&fit=crop"],
+        address: "Battery Park",
+        city: "New York",
+        latitude: "40.7033",
+        longitude: "-74.0170",
+        dateFound: "2025-03-31",
+        timeFound: "11:20",
+        finderName: "Emily Chen",
+        finderPhone: "555-876-5432",
+        finderEmail: "emily.chen@example.com"
+      },
+      {
+        breed: "Poodle",
+        color: "White",
+        description: "Small toy poodle, recently groomed. Wearing a pink collar with rhinestones but no identification tag.",
+        imageUrls: ["https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=500&auto=format&fit=crop"],
+        address: "Bryant Park",
+        city: "New York",
+        latitude: "40.7536",
+        longitude: "-73.9832",
+        dateFound: "2025-04-01",
+        timeFound: "13:10",
+        finderName: "Michael Brown",
+        finderPhone: "555-345-6789",
+        finderEmail: "m.brown@example.com"
+      }
+    ];
+    
+    // Add demo dogs to storage
+    demoDogs.forEach(dog => {
+      this.createDog(dog);
     });
   }
 
@@ -52,7 +140,7 @@ export class MemStorage implements IStorage {
 
     if (filters.city && filters.city !== '') {
       results = results.filter(dog => 
-        dog.city.toLowerCase().includes(filters.city.toLowerCase())
+        dog.city.toLowerCase().includes(filters.city!.toLowerCase())
       );
     }
 
@@ -77,9 +165,25 @@ export class MemStorage implements IStorage {
   async createDog(insertDog: InsertDog): Promise<Dog> {
     const id = this.dogsCurrentId++;
     const now = new Date();
+    // Ensure breed is handled correctly - it can be null if undefined
+    const breed = insertDog.breed === undefined ? null : insertDog.breed;
+    
+    // Explicitly build the dog object without using spread to avoid type issues
     const dog: Dog = { 
-      ...insertDog, 
-      id, 
+      id,
+      breed,
+      color: insertDog.color, 
+      description: insertDog.description,
+      imageUrls: insertDog.imageUrls,
+      address: insertDog.address,
+      city: insertDog.city,
+      latitude: insertDog.latitude,
+      longitude: insertDog.longitude,
+      dateFound: insertDog.dateFound,
+      timeFound: insertDog.timeFound,
+      finderName: insertDog.finderName,
+      finderPhone: insertDog.finderPhone,
+      finderEmail: insertDog.finderEmail,
       status: "active", 
       createdAt: now 
     };

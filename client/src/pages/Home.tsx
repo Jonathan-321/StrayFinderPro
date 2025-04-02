@@ -16,12 +16,12 @@ export default function Home() {
               <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
                 <Button asChild size="lg" className="bg-primary hover:bg-blue-600">
                   <Link href="/report-dog">
-                    <a>Report Found Dog</a>
+                    Report Found Dog
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="bg-white hover:bg-gray-100 text-gray-900">
                   <Link href="/found-dogs">
-                    <a>Find Your Dog</a>
+                    Find Your Dog
                   </Link>
                 </Button>
               </div>
@@ -77,7 +77,7 @@ export default function Home() {
             <div className="mt-10 text-center">
               <Button asChild size="lg" className="bg-primary hover:bg-blue-600">
                 <Link href="/found-dogs">
-                  <a>Browse Found Dogs</a>
+                  Browse Found Dogs
                 </Link>
               </Button>
             </div>
