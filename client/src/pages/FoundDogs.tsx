@@ -67,6 +67,16 @@ export default function FoundDogs() {
 
         <div className="mb-8">
           <FiltersBar onFilterChange={handleFilterChange} />
+          
+          <div className="mt-3 bg-blue-50 border border-blue-100 rounded-md p-4 text-sm text-blue-800">
+            <p className="flex items-center">
+              <span className="mr-2">💡</span>
+              <span>
+                <strong>Tip:</strong> Use the filters above to search by breed, city, or keywords. 
+                Click on any dog card to view more details and contact information.
+              </span>
+            </p>
+          </div>
         </div>
 
         {isLoading ? (
@@ -110,7 +120,7 @@ export default function FoundDogs() {
                     <PaginationItem>
                       <PaginationPrevious
                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                        disabled={currentPage === 1}
+                        style={{ opacity: currentPage === 1 ? 0.5 : 1, pointerEvents: currentPage === 1 ? 'none' : 'auto' }}
                       />
                     </PaginationItem>
                     
@@ -128,7 +138,7 @@ export default function FoundDogs() {
                     <PaginationItem>
                       <PaginationNext
                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                        disabled={currentPage === totalPages}
+                        style={{ opacity: currentPage === totalPages ? 0.5 : 1, pointerEvents: currentPage === totalPages ? 'none' : 'auto' }}
                       />
                     </PaginationItem>
                   </PaginationContent>

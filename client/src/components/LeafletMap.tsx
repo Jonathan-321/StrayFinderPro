@@ -182,11 +182,24 @@ export default function LeafletMap({
         </div>
       )}
       
-      <p className="text-xs text-gray-500">
-        {readOnly 
-          ? "This map shows where the dog was found"
-          : "Click on the map to mark the exact location where you found the dog"}
-      </p>
+      <div className="bg-gray-50 p-2 rounded-md border border-gray-200 mt-1">
+        {readOnly ? (
+          <p className="text-xs text-gray-700">
+            <span className="font-medium">📍 Location:</span> This map shows where the dog was found
+          </p>
+        ) : (
+          <div className="space-y-1">
+            <p className="text-xs text-gray-700">
+              <span className="font-medium">📍 How to mark location:</span>
+            </p>
+            <ul className="text-xs text-gray-600 list-disc pl-4 space-y-0.5">
+              <li>Click directly on the map to place a marker</li>
+              <li>Use the "Use my current location" button if you're at the location now</li>
+              <li>You can zoom in/out using the + and - buttons for more accuracy</li>
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

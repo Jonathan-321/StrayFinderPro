@@ -115,6 +115,9 @@ export default function ReportDog() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 space-y-6">
             <div>
               <FormLabel className="block text-sm font-medium text-gray-700 mb-1">Upload Dog Photos</FormLabel>
+              <div className="mb-2 text-sm text-gray-600">
+                Clear photos help owners identify their pets. Upload at least one photo showing the dog clearly.
+              </div>
               <ImageUpload 
                 onImageUpload={handleImageUpload}
                 existingImages={form.getValues().imageUrls}

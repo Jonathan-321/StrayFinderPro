@@ -28,6 +28,27 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
+        {/* Welcome banner */}
+        <div className="bg-blue-50 border-t border-b border-blue-100 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center md:justify-between flex-wrap">
+              <div className="flex items-center flex-shrink-0 mr-6">
+                <span className="font-medium text-blue-600 text-lg">Welcome to PawFinder!</span>
+              </div>
+              <div className="flex-grow text-center md:text-left my-2 md:my-0 text-sm text-blue-700">
+                Over 150,000 dogs are reunited with their families each year. Help us grow that number!
+              </div>
+              <div className="flex-shrink-0 mt-2 md:mt-0">
+                <Link href="#how-it-works">
+                  <span className="inline-block text-sm px-4 py-2 leading-none border rounded text-blue-600 border-blue-600 hover:border-transparent hover:text-white hover:bg-blue-600 cursor-pointer">
+                    Learn How
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* How It Works Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="how-it-works">
