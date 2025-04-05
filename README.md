@@ -3,6 +3,16 @@
 ## Overview
 StrayFinderPro is a web application designed to help locate and report stray animals. The platform allows users to submit reports with location data, helping connect lost pets with their owners and assisting stray animals in finding new homes.
 
+## Demo
+
+### Application Walkthrough
+
+Check out this short demo video showing the application in action:
+
+[Watch Demo Video](images/demo.mov)
+
+*Note: To view the demo, clone this repository and open the video file in your media player, or click on the file in GitHub.*
+
 ## Features
 - Interactive map integration using Leaflet for precise location reporting
 - User-friendly interface built with React and Tailwind CSS
