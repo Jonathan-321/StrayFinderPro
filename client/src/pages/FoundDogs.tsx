@@ -37,6 +37,15 @@ export default function FoundDogs() {
       filters.city,
       filters.query,
     ],
+    queryFn: () => {
+      const queryParams = new URLSearchParams();
+      if (filters.breed) queryParams.append('breed', filters.breed);
+      if (filters.city) queryParams.append('city', filters.city);
+      if (filters.query) queryParams.append('query', filters.query);
+      
+      const url = `/api/dogs${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+      return fetchData<Dog[]>(url);
+    },
   });
 
   const handleFilterChange = (newFilters: { breed: string; city: string; query: string }) => {

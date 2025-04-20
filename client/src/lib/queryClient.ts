@@ -41,6 +41,16 @@ export const getQueryFn: <T>(options: {
     return await res.json();
   };
 
+// Helper function to fetch data with proper error handling
+export async function fetchData<T>(url: string): Promise<T> {
+  const res = await fetch(url, {
+    credentials: "include",
+  });
+  
+  await throwIfResNotOk(res);
+  return await res.json();
+}
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

@@ -18,6 +18,7 @@ import LeafletMap from "@/components/LeafletMap";
 import ContactModal from "@/components/ContactModal";
 import { useState } from "react";
 import { Link } from "wouter";
+import { fetchData } from "@/lib/queryClient";
 
 interface DogDetailsProps {
   id: string;
@@ -29,6 +30,9 @@ export default function DogDetails({ id }: DogDetailsProps) {
 
   const { data: dog, isLoading, isError, error } = useQuery<Dog>({
     queryKey: [`/api/dogs/${id}`],
+    queryFn: () => fetchData<Dog>(`/api/dogs/${id}`),
+    retry: 1,
+    refetchOnWindowFocus: false,
     onError: (err) => {
       toast({
         title: "Error fetching dog details",
