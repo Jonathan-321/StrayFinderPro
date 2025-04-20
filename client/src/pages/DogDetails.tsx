@@ -91,11 +91,9 @@ export default function DogDetails({ id }: DogDetailsProps) {
             <p>{error instanceof Error ? error.message : "Unable to fetch data"}</p>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline" asChild>
-              <Link href="/found-dogs">
-                <a>Return to Found Dogs</a>
-              </Link>
-            </Button>
+            <Link href="/found-dogs">
+              <Button variant="outline">Return to Found Dogs</Button>
+            </Link>
             <Button onClick={() => window.location.reload()}>
               Try Again
             </Button>
@@ -128,14 +126,12 @@ export default function DogDetails({ id }: DogDetailsProps) {
   return (
     <div className="py-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-6">
-        <Button variant="outline" className="mb-4" asChild>
-          <Link href="/found-dogs">
-            <a className="flex items-center">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to all dogs
-            </a>
-          </Link>
-        </Button>
+        <Link href="/found-dogs">
+          <Button variant="outline" className="mb-4 flex items-center">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to all dogs
+          </Button>
+        </Link>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{dog.breed || "Unknown Breed"}</h1>
         <div className="flex items-center gap-2">
           <MapPin className="h-4 w-4 text-gray-500" />
