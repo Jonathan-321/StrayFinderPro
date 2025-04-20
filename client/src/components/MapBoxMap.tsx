@@ -42,6 +42,8 @@ export default function MapBoxMap({
         return null;
       }
       
+      console.log("Reverse geocoding for", lat, lng);
+      
       const response = await geocodingService.reverseGeocode({
         query: [lng, lat],
         types: ["address", "place", "locality"],
@@ -50,14 +52,28 @@ export default function MapBoxMap({
       
       if (response && response.body.features.length > 0) {
         const feature = response.body.features[0];
-        const placeInfo = {
-          address: feature.place_name?.split(',')[0] || "",
-          city: feature.context?.find((item: any) => item.id.startsWith('place'))?.text || 
-                feature.context?.find((item: any) => item.id.startsWith('locality'))?.text || 
-                feature.context?.find((item: any) => item.id.startsWith('district'))?.text || "",
-        };
+        console.log("Geocoding feature:", feature);
         
-        return placeInfo;
+        // Extract address components
+        const addressParts = feature.place_name.split(',').map((part: string) => part.trim());
+        const address = addressParts[0] || "";
+        
+        // Try to find city from context
+        let city = "";
+        if (feature.context) {
+          const placeContext = feature.context.find((ctx: any) => 
+            ctx.id.startsWith('place.') || 
+            ctx.id.startsWith('locality.') || 
+            ctx.id.startsWith('district.')
+          );
+          city = placeContext ? placeContext.text : addressParts[1] || "";
+        } else {
+          city = addressParts[1] || "";
+        }
+        
+        console.log("Found address:", address, "city:", city);
+        
+        return { address, city };
       }
       return null;
     } catch (error) {
@@ -195,18 +211,61 @@ export default function MapBoxMap({
             .addTo(map.current);
         }
         
-        // Get address from coordinates
-        const placeInfo = await getAddressFromCoordinates(latitude, longitude);
-        
-        // Pass location to parent component
-        onLocationSelect(
-          latitude.toString(),
-          longitude.toString(),
-          placeInfo?.address,
-          placeInfo?.city
-        );
-        
-        setIsLoadingLocation(false);
+        try {
+          console.log("Getting address for coordinates:", latitude, longitude);
+          
+          // Get address from coordinates with a more reliable method
+          if (geocodingService) {
+            const response = await geocodingService.reverseGeocode({
+              query: [longitude, latitude],
+              types: ["address", "place", "locality"],
+              limit: 1
+            }).send();
+            
+            if (response && response.body.features.length > 0) {
+              const feature = response.body.features[0];
+              console.log("MapBox geocoding response:", feature);
+              
+              // Extract address components
+              const addressParts = feature.place_name.split(',').map(part => part.trim());
+              const address = addressParts[0] || "";
+              
+              // Try to find city from context
+              let city = "";
+              if (feature.context) {
+                const placeContext = feature.context.find((ctx: any) => 
+                  ctx.id.startsWith('place.') || 
+                  ctx.id.startsWith('locality.') || 
+                  ctx.id.startsWith('district.')
+                );
+                city = placeContext ? placeContext.text : addressParts[1] || "";
+              } else {
+                city = addressParts[1] || "";
+              }
+              
+              console.log("Extracted address:", address, "city:", city);
+              
+              // Pass location to parent component
+              onLocationSelect(
+                latitude.toString(),
+                longitude.toString(),
+                address,
+                city
+              );
+            } else {
+              console.warn("No results found for the current location coordinates");
+              onLocationSelect(latitude.toString(), longitude.toString());
+            }
+          } else {
+            console.warn("Geocoding service not initialized yet");
+            onLocationSelect(latitude.toString(), longitude.toString());
+          }
+        } catch (error) {
+          console.error("Error getting address for current location:", error);
+          onLocationSelect(latitude.toString(), longitude.toString());
+        } finally {
+          setIsLoadingLocation(false);
+        }
       },
       (error) => {
         let errorMessage = "Failed to get your location";
