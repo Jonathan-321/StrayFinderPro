@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
