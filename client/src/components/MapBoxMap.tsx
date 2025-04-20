@@ -68,21 +68,31 @@ export default function MapBoxMap({
 
   // Initialize MapBox services
   useEffect(() => {
-    // Get the MapBox token directly from the environment variable
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-    
-    if (!token) {
-      console.error("MapBox token is missing. Please make sure it's properly set.");
-      setLocationError("Map service is not properly configured.");
-      return;
+    async function initializeMapBox() {
+      try {
+        // Fetch the MapBox token from our API
+        const response = await fetch('/api/config/mapbox');
+        const data = await response.json();
+        
+        if (!response.ok || !data.token) {
+          throw new Error("Failed to get MapBox token");
+        }
+        
+        const token = data.token;
+        
+        // Set the token for MapBox GL
+        mapboxgl.accessToken = token;
+        
+        // Initialize the MapBox SDK and geocoding service
+        const client = mapboxSdk({ accessToken: token });
+        geocodingService = mapboxGeocodingClient(client);
+      } catch (error) {
+        console.error("Error initializing MapBox:", error);
+        setLocationError("Map service is not properly configured.");
+      }
     }
     
-    // Set the token for MapBox GL
-    mapboxgl.accessToken = token;
-    
-    // Initialize the MapBox SDK and geocoding service
-    const client = mapboxSdk({ accessToken: token });
-    geocodingService = mapboxGeocodingClient(client);
+    initializeMapBox();
   }, []);
 
   // Initialize map

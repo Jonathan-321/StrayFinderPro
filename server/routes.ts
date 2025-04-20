@@ -188,6 +188,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Config routes
+  app.get("/api/config/mapbox", (req, res) => {
+    const token = process.env.MAPBOX_ACCESS_TOKEN;
+    if (!token) {
+      return res.status(500).json({ message: "MapBox token not configured" });
+    }
+    res.json({ token });
+  });
+  
   // Admin routes
   app.patch("/api/admin/dogs/:id/status", isAdmin, async (req, res) => {
     try {
