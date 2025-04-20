@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
-import LeafletMap from "@/components/LeafletMap";
+import MapBoxMap from "@/components/MapBoxMap";
 import ContactModal from "@/components/ContactModal";
 import { useState } from "react";
 import { Link } from "wouter";
@@ -33,13 +33,6 @@ export default function DogDetails({ id }: DogDetailsProps) {
     queryFn: () => fetchData<Dog>(`/api/dogs/${id}`),
     retry: 1,
     refetchOnWindowFocus: false,
-    onError: (err) => {
-      toast({
-        title: "Error fetching dog details",
-        description: err instanceof Error ? err.message : "There was a problem loading the dog details.",
-        variant: "destructive",
-      });
-    },
   });
 
   if (isLoading) {
@@ -214,7 +207,7 @@ export default function DogDetails({ id }: DogDetailsProps) {
                 <CardDescription>Where this dog was found</CardDescription>
               </CardHeader>
               <CardContent>
-                <LeafletMap
+                <MapBoxMap
                   initialLat={dog.latitude}
                   initialLng={dog.longitude}
                   readOnly={true}

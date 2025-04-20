@@ -6,13 +6,9 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxSdk from "@mapbox/mapbox-sdk";
 import mapboxGeocodingClient from "@mapbox/mapbox-sdk/services/geocoding";
 
-// Initialize Mapbox SDK with the access token
-const MAPBOX_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-const mapboxClient = mapboxSdk({ accessToken: MAPBOX_TOKEN });
-const geocodingService = mapboxGeocodingClient(mapboxClient);
-
-// Set the default token for mapbox-gl
-mapboxgl.accessToken = MAPBOX_TOKEN;
+// We'll initialize the token and clients inside the component to ensure it's available
+// Set up a placeholder for the geocoding service that will be initialized in the component
+let geocodingService: ReturnType<typeof mapboxGeocodingClient> | null = null;
 
 interface MapBoxMapProps {
   onLocationSelect: (lat: string, lng: string, address?: string, city?: string) => void;
@@ -41,6 +37,11 @@ export default function MapBoxMap({
   // Get address from coordinates using Mapbox Geocoding API
   const getAddressFromCoordinates = useCallback(async (lat: number, lng: number) => {
     try {
+      if (!geocodingService) {
+        console.error("Geocoding service not initialized");
+        return null;
+      }
+      
       const response = await geocodingService.reverseGeocode({
         query: [lng, lat],
         types: ["address", "place", "locality"],
@@ -65,9 +66,28 @@ export default function MapBoxMap({
     }
   }, []);
 
+  // Initialize MapBox services
+  useEffect(() => {
+    // Get the MapBox token directly from the environment variable
+    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+    
+    if (!token) {
+      console.error("MapBox token is missing. Please make sure it's properly set.");
+      setLocationError("Map service is not properly configured.");
+      return;
+    }
+    
+    // Set the token for MapBox GL
+    mapboxgl.accessToken = token;
+    
+    // Initialize the MapBox SDK and geocoding service
+    const client = mapboxSdk({ accessToken: token });
+    geocodingService = mapboxGeocodingClient(client);
+  }, []);
+
   // Initialize map
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
+    if (!mapContainer.current || map.current || !mapboxgl.accessToken) return;
     
     // Initial position
     const initialPosition = {

@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 import { useState } from "react";
 import ImageUpload from "@/components/ImageUpload";
-import LeafletMap from "@/components/LeafletMap";
+import MapBoxMap from "@/components/MapBoxMap";
 
 import {
   Form,
@@ -90,10 +90,21 @@ export default function ReportDog() {
     }
   };
 
-  const handleLocationSelect = (lat: string, lng: string) => {
+  const handleLocationSelect = (lat: string, lng: string, address?: string, city?: string) => {
     form.setValue("latitude", lat);
     form.setValue("longitude", lng);
     form.clearErrors(["latitude", "longitude"]);
+    
+    // Automatically fill in address and city if provided by the map component
+    if (address) {
+      form.setValue("address", address);
+      form.clearErrors(["address"]);
+    }
+    
+    if (city) {
+      form.setValue("city", city);
+      form.clearErrors(["city"]);
+    }
   };
 
   const handleImageUpload = (urls: string[]) => {
@@ -195,7 +206,7 @@ export default function ReportDog() {
 
             <div>
               <FormLabel className="block text-sm font-medium text-gray-700 mb-1">Where was the dog found?</FormLabel>
-              <LeafletMap onLocationSelect={handleLocationSelect} />
+              <MapBoxMap onLocationSelect={handleLocationSelect} />
               {(form.formState.errors.latitude || form.formState.errors.longitude) && (
                 <p className="text-sm text-red-500 mt-1">Please mark the location on the map</p>
               )}
