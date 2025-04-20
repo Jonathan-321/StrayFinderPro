@@ -6,6 +6,7 @@ import FiltersBar from "@/components/FiltersBar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
+import { fetchData } from "@/lib/queryClient";
 import {
   Pagination,
   PaginationContent,
